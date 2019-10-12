@@ -11,7 +11,7 @@ def hello_world():
 
 @webhook.hook()        # Defines a handler for the 'push' event
 def on_push(data):
-    process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name'])
+    process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name']))
     stdoutput, stderroutput = process.communicate()
         app_path, stdout=PIPE, stderr=PIPE)
     process = subprocess.Popen(["sudo", "systemctl", "restart", "apache2"], stdout=PIPE, stderr=PIPE)
