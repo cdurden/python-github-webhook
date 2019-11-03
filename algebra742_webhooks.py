@@ -15,6 +15,8 @@ def hello_world():
 def on_push(data):
     process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name']), stdout=PIPE, stderr=PIPE)
     stdoutput, stderroutput = process.communicate()
+    process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'dev', data['repository']['name']), stdout=PIPE, stderr=PIPE)
+    stdoutput, stderroutput = process.communicate()
     process = subprocess.Popen(["sudo", "systemctl", "restart", "apache2"], stdout=PIPE, stderr=PIPE)
     stdoutput, stderroutput = process.communicate()
     print("Got push with: {0}".format(data))
