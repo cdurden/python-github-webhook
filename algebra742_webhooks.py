@@ -18,10 +18,10 @@ def on_push(data):
     stdoutput, stderroutput = process.communicate()
     process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'dev', data['repository']['name']), stdout=PIPE, stderr=PIPE)
     stdoutput, stderroutput = process.communicate()
-    if data['repository']['name'] in ['md','slides','tasks']:
-        print("updating teaching_assets")
-        process = subprocess.Popen(['git','submodule','foreach','git','pull','origin','master'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'teaching_assets'), stdout=PIPE, stderr=PIPE)
-        stdoutput, stderroutput = process.communicate()
+#    if data['repository']['name'] in ['md','slides','tasks']:
+#        print("updating teaching_assets")
+#        process = subprocess.Popen(['git','submodule','foreach','git','pull','origin','master'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'teaching_assets'), stdout=PIPE, stderr=PIPE)
+#        stdoutput, stderroutput = process.communicate()
     if data['repository']['name'] in ['algebra742']:
         process = subprocess.Popen(["sudo", "systemctl", "restart", "apache2"], stdout=PIPE, stderr=PIPE)
         stdoutput, stderroutput = process.communicate()
