@@ -14,10 +14,12 @@ def hello_world():
 @webhook.hook()        # Defines a handler for the 'push' event
 def on_push(data):
     print("Got push on repository '{:s}'".format(data['repository']['name']))
-    process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name']), stdout=PIPE, stderr=PIPE)
-    stdoutput, stderroutput = process.communicate()
-    process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'dev', data['repository']['name']), stdout=PIPE, stderr=PIPE)
-    stdoutput, stderroutput = process.communicate()
+    if os.path.exists(os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name'])):
+        process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], data['repository']['name']), stdout=PIPE, stderr=PIPE)
+        stdoutput, stderroutput = process.communicate()
+    if os.path.exists(os.path.join(os.environ['WSGI_APPS_PATH'], 'dev', data['repository']['name'])):
+        process = subprocess.Popen(['git','pull'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'dev', data['repository']['name']), stdout=PIPE, stderr=PIPE)
+        stdoutput, stderroutput = process.communicate()
 #    if data['repository']['name'] in ['md','slides','tasks']:
 #        print("updating teaching_assets")
 #        process = subprocess.Popen(['git','submodule','foreach','git','pull','origin','master'], cwd=os.path.join(os.environ['WSGI_APPS_PATH'], 'teaching_assets'), stdout=PIPE, stderr=PIPE)
