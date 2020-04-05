@@ -29,6 +29,9 @@ def on_push(data):
         stdoutput, stderroutput = process.communicate()
         process = subprocess.Popen(["sudo", "systemctl", "restart", "emperor.uwsgi"], stdout=PIPE, stderr=PIPE)
         stdoutput, stderroutput = process.communicate()
+    if data['repository']['name'] in ['Albus']:
+        process = subprocess.Popen(["pm2", "restart", "server"], stdout=PIPE, stderr=PIPE)
+        stdoutput, stderroutput = process.communicate()
     #process = subprocess.Popen(["sudo", "pm2", "restart", "server"], stdout=PIPE, stderr=PIPE)
     #stdoutput, stderroutput = process.communicate()
     #print("Got push with: {0}".format(data))
